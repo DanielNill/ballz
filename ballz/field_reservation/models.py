@@ -13,4 +13,4 @@ class Reservation(models.Model):
     end_time = models.DateTimeField()
 
     def __unicode__(self):
-        return self.field
+        return 'reservation ' + self.id
