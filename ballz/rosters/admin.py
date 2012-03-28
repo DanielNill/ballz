@@ -18,6 +18,9 @@ class StatTypesAdmin(admin.ModelAdmin):
     
     fieldsets = [
         (None, {'fields':['name']})]  
+
+class Stat(admin.ModelAdmin):
+    list_display = []
          
 admin.site.register(ContactInfo, ContactInfoAdmin)
 admin.site.register(StatTypes, StatTypesAdmin)
