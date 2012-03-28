@@ -104,6 +104,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django_evolution',
+    'field_reservation',
+    'rosters',
 )
 
 # A sample logging configuration. The only tangible logging
