@@ -1,3 +1,4 @@
+from django.conf.auth.models import User
 from django.db import models
 
 class ContactInfo(models.Model):
@@ -31,6 +32,14 @@ class Player(models.Model):
     contact_info = models.ForeignKey(ContactInfo)
     photo = models.ImageField(upload_to='media/player_photos/', blank=True, null=True)
     stats = models.ForeignKey(Stat)
-
+    user = models.ForeignKey(User) #the user that input that player
     def __unicode__(self):
         return self.name
+class Sport(models.Model):
+    name = models.CharField(max_length=100)
+       
+class Team(models.Models):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    players = models.ManyToManyField(Player)
+    sport = models.ForeignKey(Sport)
+    
