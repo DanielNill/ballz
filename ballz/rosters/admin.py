@@ -19,8 +19,20 @@ class StatTypesAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields':['name']})]  
 
-class Stat(admin.ModelAdmin):
-    list_display = []
+class StatAdmin(admin.ModelAdmin):
+    list_display = ['stat_type', 'stat_value']
+    
+    fieldsets = [
+        (None, {'fields':['stat_type', 'stat_value']})
+    ]
+    
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'age', 'position', 'contact_info', 'photo', 'stats']
+    
+    fieldsets = [
+        (None, {'fields':['name', 'age', 'position', 'contact_info', 'photo', 'stats']})
+    ]
          
 admin.site.register(ContactInfo, ContactInfoAdmin)
 admin.site.register(StatTypes, StatTypesAdmin)
+admin.site.register(Player, PlayerAdmin)

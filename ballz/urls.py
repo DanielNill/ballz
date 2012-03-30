@@ -1,17 +1,15 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.shortcuts import render_to_response, RequestContext
+from django.contrib import admin
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
+def landing(request):
+    return render_to_response('landing.html', RequestContext(request, locals()))
+    
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'ballz.views.home', name='home'),
-    # url(r'^ballz/', include('ballz.foo.urls')),
+    url(r'^$', landing),
+    url(r'^rosters/', include('ballz.rosters.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )
