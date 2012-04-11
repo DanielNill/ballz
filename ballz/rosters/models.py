@@ -1,4 +1,4 @@
-from django.conf.auth.models import User
+from django.contrib.auth.models import User
 from django.db import models
 
 class ContactInfo(models.Model):
@@ -8,23 +8,23 @@ class ContactInfo(models.Model):
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=15, blank=True, null=True)
     zipcode = models.IntegerField(blank=True, null=True)
-    
+
     def __unicode__(self):
         return self.phone
 
 class StatTypes(models.Model):
     name = models.CharField(max_length=25)
-    
+
     def __unicode__(self):
         return self.name
 
 class Stat(models.Model):
     stat_type = models.ForeignKey(StatTypes)
     stat_value = models.IntegerField()
-    
+
     def __unicode__(self):
         return self.state_type
-        
+
 class Player(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField(blank=True, null=True)
@@ -37,9 +37,9 @@ class Player(models.Model):
         return self.name
 class Sport(models.Model):
     name = models.CharField(max_length=100)
-       
-class Team(models.Models):
+
+class Team(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     players = models.ManyToManyField(Player)
     sport = models.ForeignKey(Sport)
-    
+
