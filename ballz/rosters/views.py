@@ -23,6 +23,7 @@ def create_roster(request):
 def manage_roster(request, team_id):
     return render_to_response('manage_roster.html', RequestContext(request, locals()))
 
+
 def add_player(request):
     if request.is_ajax():
     # TODO: setup image upload for photo
