@@ -32,7 +32,7 @@ class Player(models.Model):
     contact_info = models.ForeignKey(ContactInfo)
     photo = models.ImageField(upload_to='media/player_photos/', blank=True, null=True)
     stats = models.ForeignKey(Stat)
-    user = models.ForeignKey(User) #the user that input that player
+    user = models.ForeignKey(User, default=0) #the user that input that player
     def __unicode__(self):
         return self.name
 class Sport(models.Model):

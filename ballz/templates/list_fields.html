@@ -1,0 +1,6 @@
+<h1>Fields</h1>
+<ul>
+{% for field in fields.all %}
+<li>{{ field.name }}, located at {{ field.location }}</li>
+{% endfor %}
+</ul>

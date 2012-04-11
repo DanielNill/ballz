@@ -6,10 +6,11 @@ admin.autodiscover()
 
 def landing(request):
     return render_to_response('landing.html', RequestContext(request, locals()))
-    
+
 urlpatterns = patterns('',
     url(r'^$', landing),
     url(r'^rosters/', include('ballz.rosters.urls')),
+    url(r'^field_reservation/', include('ballz.field_reservation.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
