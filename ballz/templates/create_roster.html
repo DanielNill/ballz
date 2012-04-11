@@ -1,21 +1,113 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src='{{ MEDIA_URL }}ajax_csrf.js'></script>
 </head>
 <body>
     <h1>create a roster</h1>
     <a href="Javascript:toggle('.new_player')">add a player</a>    
     <div class="new_player" style="display:none;">
-        <form>
-            {{ new_player_form.as_p }}
-            <input type="button" value="Add player"/>
-        </form>
+        <label>Name:</label><input type="text" id="name" name="name"/>
+        <label>Age</label><input type="text" id="age" name="age"/>
+        <label>Position:</label><input type="text" id="positon" name="postion"/>
+        <label>Phone:</label><input type="text" id="phone" name="phone"/>
+        <label>Email:</label><input type="text" id="email" name="email"/>
+        <label>Address:</label><input type="address" id="address" name="address"/>
+        <label>City:</label><input type="text" id="city" name="city"/>
+        <!-- THATS RIGHT I'M JUST GOING TO LIST OUT ALL 50 STATES -->
+        <label>State:</label><select id="state" name="state"> 
+            <option>Alabama</option>
+            <option>Alaska</option>
+            <option>Arizona</option>
+            <option>Arkansas</option>
+            <option>California</option>
+            <option>Colorado</option>
+            <option>Connecticut</option>
+            <option>Delaware</option>
+            <option>Florida</option>
+            <option>Georgia</option>
+            <option>Hawaii</option>
+            <option>Idaho</option>
+            <option>Illinois</option>
+            <option>Indiana</option>
+            <option>Iowa</option>
+            <option>Kansas</option>
+            <option>Kentucky</option>
+            <option>Louisiana</option>
+            <option>Maine</option>
+            <option>Maryland</option>
+            <option>Massachusetts</option>
+            <option>Michigan</option>
+            <option>Minnesota</option>
+            <option>Mississippi</option>
+            <option>Missouri</option>
+            <option>Montana</option>
+            <option>Nebraska</option>
+            <option>Nevada</option>
+            <option>New Hampshire</option>
+            <option>New Jersey</option>
+            <option>New Mexico</option>
+            <option>New York</option>
+            <option>North Carolina</option>
+            <option>North Dakota</option>
+            <option>Ohio</option>
+            <option>Oklahoma</option>
+            <option>Oregon</option>
+            <option>Pennsylvania</option>
+            <option>Rhode Island</option>
+            <option>South Carolina</option>
+            <option>South Dakota</option>
+            <option>Tennessee</option>
+            <option>Texas</option>
+            <option>Utah</option>
+            <option>Vermont	Virginia</option>
+            <option>Washington</option>
+            <option>West Virginia</option>
+            <option>Wisconsin</option>
+            <option>Wyoming</option>
+        </select>
+        <label>Zipcode:</label><input type="text" id="zipcode" name="zipcode"/>
+        <label>Photo:</label><input type="file" id="photo" name="photo"/>
+        <input type="button" value="Add player" onclick="add_player()"/>
     </div>
-    
+<div id="result">
+</div>   
 <script>
     function toggle(selector){
         $(selector).toggle();
     }
+    
+    function add_player(){
+        var photo = $('#photo').val; //we are just not going to ajax upload the photo right now. We'll deal with this later
+        
+        if($('#name').val() == ''){
+            alert('you gotta give a name');
+            return;
+        }
+        else{
+            $.ajax({
+                url:'/rosters/add_player/',
+                type:'post',
+                data:{
+                    'name':     $('#name').val(), 
+                    'age':      $('#age').val(), 
+                    'position': 'something',
+                    'phone':    $('#phone').val(),
+                    'email':    $('#email').val(),
+                    'address':  $('#address').val(),
+                    'city':     $('#city').val(),
+                    'state':    $('#state').val(),
+                    'zipcode':  $('#zipcode').val()
+                },
+                complete: function(data){
+                    $('.new_player').toggle();
+                    alert(data.player_name);
+                    $('#result').append('<div id="player_'+data.player_name+'">Name:'+data.player_name+'<input type="button" onclick="remove_player()"/></div>');
+                }
+            });
+        }
+    }
 </script>
+
 </body>
 </html>

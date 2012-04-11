@@ -1,2 +1,26 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src='{{ MEDIA_URL }}ajax_csrf.js'></script>
+</head>
+<body>
 see user's rosters
-<a href="/rosters/create/">Create a Roster</a>
+<a href="Javascript:create_roster()">Create a Roster</a>
+<div id="new_team" style="display:none;">
+	<form action="/rosters/create/" method="post">{% csrf_token %}
+		<label>Team Name:</label>
+		<input type="text" name="team_name"/>
+		<select name="sport">
+			<option>soccer</option>
+			<option>basketball</option>
+		</select>
+		<input type="submit"/>
+	</form>
+</div>
+<script>
+function create_roster(){
+	$('#new_team').toggle();
+}
+</script>
+</body>
+</html>
