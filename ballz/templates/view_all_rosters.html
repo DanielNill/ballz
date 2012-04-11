@@ -5,7 +5,7 @@
 </head>
 <body>
 see user's rosters
-<a href="Javascript:create_roster()">Create a Roster</a>
+<a href="Javascript:new_roster()">Create a Roster</a>
 <div id="new_team" style="display:none;">
 	<form action="/rosters/create/" method="post">{% csrf_token %}
 		<label>Team Name:</label>
@@ -18,7 +18,7 @@ see user's rosters
 	</form>
 </div>
 <script>
-function create_roster(){
+function new_roster(){
 	$('#new_team').toggle();
 }
 </script>

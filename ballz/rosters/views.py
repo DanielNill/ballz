@@ -10,14 +10,14 @@ def view_all_rosters(request):
 
 
 def create_roster(request):
-    if request.is_ajax:
+    if request.method == 'POST':
         name = request.POST['team_name']
         sport = Sport.objects.create(name=request.POST['sport'])
         sport.save()
         team = Team.objects.create(name=name, sport=sport)
         team.save()
         return manage_roster(request, team.id)
-    return render_to_response('create_roster.html', RequestContext(request, locals()))
+    return view_all_rosters(request)
 
 
 def manage_roster(request, team_id):
