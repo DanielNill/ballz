@@ -45,7 +45,7 @@ def add_player(request):
             state=request.POST['state'],
             zipcode=zipcode
         )
-        if not created:
+        if created:
             contact_info.save()
 
         player = Player.objects.create(
@@ -57,16 +57,34 @@ def add_player(request):
         )
         player.save()
 
+        # add player to team
+        team = Team.objects.get(id=request.POST['team'])
+        team.players.add(player)
+        team.save()
+
         data = json.dumps({
-            'player_name':     player.name,
-            'age':      player.age,
-            'position': player.position,
-            'phone':    contact_info.phone,
-            'email':    contact_info.email,
-            'address':  contact_info.address,
-            'city':     contact_info.city,
-            'state':    contact_info.state,
-            'zipcode':  contact_info.zipcode
+            'player_name':  player.name,
+            'player_id':    player.id,
+            'age':          player.age,
+            'position':     player.position,
+            'phone':        player.contact_info.phone,
+            'email':        player.contact_info.email,
+            'address':      player.contact_info.address,
+            'city':         player.contact_info.city,
+            'state':        player.contact_info.state,
+            'zipcode':      player.contact_info.zipcode
         })
 
-    return HttpResponse(data, mimetype='application/javascript')
+    return HttpResponse(data, mimetype='application/json')
+
+
+def remove_player(request):
+    if request.is_ajax:
+        player = Player.objects.get(id=request.POST['player_id'])
+        team = Team.objects.get(id=request.POST['team_id'])
+        team.players.remove(player)
+        team.save()
+        data = json.dumps({
+            'player_id': player.id
+        })
+        return HttpResponse(data, mimetype='application/json')

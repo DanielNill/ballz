@@ -72,8 +72,9 @@
         <input type="button" value="Add player" onclick="add_player()"/>
     </div>
 <div id="result">
-    {% for player in team.player %}
-        <div id="player_{{ player.id }}">Name: {{ player.name }}<input type="button" value="remove" onclick="remove_player()"/></div>
+    <h2>players:</h2>
+    {% for player in team.players.all %}
+        <div id="player_{{ player.id }}">Name: {{ player.name }}<input type="button" value="remove" onclick="remove_player('{{ player.id }}')"/></div>
     {% endfor %}
 </div>   
 <script>
@@ -93,6 +94,7 @@
                 url:'/rosters/add_player/',
                 type:'post',
                 data:{
+                    'team':     {{ team.id }},
                     'name':     $('#name').val(), 
                     'age':      $('#age').val(), 
                     'position': 'something',
@@ -103,13 +105,26 @@
                     'state':    $('#state').val(),
                     'zipcode':  $('#zipcode').val()
                 },
-                complete: function(data){
+                success: function(data){
                     $('.new_player').toggle();
-                    alert(data.player_name);
-                    $('#result').append('<div id="player_'+data.player_name+'">Name:'+data.player_name+'<input type="button" value="remove" onclick="remove_player()"/></div>');
+                    $('#result').append('<div id="player_'+data.player_id+'">Name: '+data.player_name+'<input type="button" value="remove" onclick="remove_player(\''+data.player_id+'\')"/></div>');
                 }
             });
         }
+    }
+
+    function remove_player(pid){
+        $.ajax({
+            url:'/rosters/remove_player/',
+            type:'post',
+            data:{
+                'team_id': {{ team.id }},
+                'player_id': pid
+            },
+            success: function(data){
+                $('#player_'+data.player_id).remove();
+            }
+        })
     }
 </script>
 
