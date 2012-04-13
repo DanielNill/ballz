@@ -38,6 +38,24 @@ class PlayerAdmin(admin.ModelAdmin):
         (None, {'fields':['name', 'age', 'position', 'contact_info', 'photo', 'stats', 'created_by']})
     ]
 
+
+class SportAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+    fieldsets = [
+        (None, {'fields':['name']})
+    ]
+
+
+class TeamAdmin(admin.ModelAdmin):
+    list_dipslay = ['name']
+
+    fieldsets = [
+        (None, {'fields':['name', 'players']})
+    ]
+
 admin.site.register(ContactInfo, ContactInfoAdmin)
 admin.site.register(StatTypes, StatTypesAdmin)
 admin.site.register(Player, PlayerAdmin)
+admin.site.register(Sport, SportAdmin)
+admin.site.register(Team, TeamAdmin)

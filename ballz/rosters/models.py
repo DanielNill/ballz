@@ -55,3 +55,6 @@ class Team(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     players = models.ManyToManyField(Player)
     sport = models.ForeignKey(Sport)
+
+    def __unicode__(self):
+        return self.name

@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>create a roster</h1>
+    <h2>{{ team.name }}</h2>
     <a href="Javascript:toggle('.new_player')">add a player</a>    
     <div class="new_player" style="display:none;">
         <label>Name:</label><input type="text" id="name" name="name"/>
@@ -71,6 +72,9 @@
         <input type="button" value="Add player" onclick="add_player()"/>
     </div>
 <div id="result">
+    {% for player in team.player %}
+        <div id="player_{{ player.id }}">Name: {{ player.name }}<input type="button" value="remove" onclick="remove_player()"/></div>
+    {% endfor %}
 </div>   
 <script>
     function toggle(selector){
@@ -102,7 +106,7 @@
                 complete: function(data){
                     $('.new_player').toggle();
                     alert(data.player_name);
-                    $('#result').append('<div id="player_'+data.player_name+'">Name:'+data.player_name+'<input type="button" onclick="remove_player()"/></div>');
+                    $('#result').append('<div id="player_'+data.player_name+'">Name:'+data.player_name+'<input type="button" value="remove" onclick="remove_player()"/></div>');
                 }
             });
         }

@@ -1,5 +1,5 @@
 import json
-from django.shortcuts import render_to_response, RequestContext
+from django.shortcuts import render_to_response, RequestContext, HttpResponseRedirect
 from django.http import HttpResponse
 from rosters.models import *
 from rosters.forms import *
@@ -12,8 +12,9 @@ def view_all_rosters(request):
 def create_roster(request):
     if request.method == 'POST':
         name = request.POST['team_name']
-        sport = Sport.objects.create(name=request.POST['sport'])
-        sport.save()
+        sport, created = Sport.objects.get_or_create(name=request.POST['sport'])
+        if created:
+            sport.save()
         team = Team.objects.create(name=name, sport=sport)
         team.save()
         return manage_roster(request, team.id)
@@ -21,6 +22,7 @@ def create_roster(request):
 
 
 def manage_roster(request, team_id):
+    team = Team.objects.get(id=team_id)
     return render_to_response('manage_roster.html', RequestContext(request, locals()))
 
 
